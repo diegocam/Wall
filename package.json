@@ -1,0 +1,12 @@
+{
+  "name": "wall_frontend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:diegocam/Wall.git",
+  "author": "Diego Camacho <camachojcd@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0"
+  }
+}
