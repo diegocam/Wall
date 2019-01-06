@@ -2,11 +2,19 @@
   "name": "wall_frontend",
   "version": "1.0.0",
   "main": "index.js",
+  "scripts": {
+    "start": "webpack --mode development",
+    "build": "webpack --mode production"
+  },
   "repository": "git@github.com:diegocam/Wall.git",
   "author": "Diego Camacho <camachojcd@gmail.com>",
   "license": "MIT",
   "dependencies": {
     "react": "^16.7.0",
     "react-dom": "^16.7.0"
+  },
+  "devDependencies": {
+    "webpack": "^4.28.3",
+    "webpack-cli": "^3.2.0"
   }
 }
