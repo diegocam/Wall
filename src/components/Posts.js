@@ -2,7 +2,7 @@ import React from 'react'
 
 const Wall = () => {
     return <div>
-        <h2>Users</h2>
+        <h2>Posts</h2>
        
         <div className="list-group">
         <a href="#" className="list-group-item list-group-item-action flex-column align-items-start active">
