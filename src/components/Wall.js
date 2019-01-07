@@ -23,7 +23,7 @@ const Wall = () => {
                                 <span><a href="">Jane Doe</a></span> That's so cool. Welcome.
                             </div>
                         </div>
-                        <div className="input-group input-group-sm mb-3">
+                        <div className="input-group input-group-sm mb-2">
                             <input type="text" className="form-control" placeholder="Write a comment" aria-label="Write a comment" aria-describedby="button-addon2"/>
                             <div className="input-group-append">
                                 <button className="btn btn-outline-secondary" type="button" id="button-addon2">Submit</button>
@@ -47,7 +47,7 @@ const Wall = () => {
                                 <span><a href="">Jane Doe</a></span> I agree. Welcome. My first time here was amazing. This app has been the best so far. Even better than the competetion. You know who im talking about.
                             </div>
                         </div>
-                        <div className="input-group input-group-sm mb-3">
+                        <div className="input-group input-group-sm mb-2">
                             <input type="text" className="form-control" placeholder="Write a comment" aria-label="Write a comment" aria-describedby="button-addon2"/>
                             <div className="input-group-append">
                                 <button className="btn btn-outline-secondary" type="button" id="button-addon2">Submit</button>
