@@ -4,23 +4,20 @@ import {Link} from 'react-router-dom'
 const Navbar = () => {
     return (
         <div>
-            <nav className="navbar navbar-expand-lg navbar-light">
-                <a className="navbar-brand" href="#"><strong>Wall</strong></a>
+            <nav className="navbar navbar-expand-lg navbar-light px-0">
+                <Link to="/" className="navbar-brand"><strong>The Wall</strong></Link>
                 <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
-                        <li className="nav-item active">
-                            <Link to="/" className="nav-link">Home</Link>
-                        </li>
-                        <li className="nav-item">
-                            <Link to="/login" className="nav-link">Login</Link>
+                        <li>
+                            <Link to="/users" className="nav-link">Users</Link>
                         </li>
                     </ul>
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Log In</button>
-                    <button className="btn btn-outline-success my-2 my-sm-0" type="submit">Register</button>
+                    <Link role="button" to="/login" className="btn btn-outline-success my-2 my-sm-0">Log In</Link>
+                    <Link role="button" to="/register" className="btn btn-outline-success my-2 my-sm-0">Register</Link>
                 </div>
             </nav>
         </div>
