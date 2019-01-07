@@ -5,6 +5,7 @@ import Login from './Login'
 import Register from './Register'
 import Navbar from './Navbar'
 import Walls from './Walls'
+import Wall from './Wall'
 
 const App = () => {
     return (
@@ -14,6 +15,7 @@ const App = () => {
             <Route path='/login' exact component={Login} />
             <Route path='/register' exact component={Register} />
             <Route path='/walls' exact component={Walls} />
+            <Route path='/wall' exact component={Wall} />
         </div>
     )
 }
