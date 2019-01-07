@@ -8,7 +8,7 @@ const Wall = () => {
             <p>
                 The Wall is simply a list of posts made by an individual user. <br/>
                 You may view someone's wall or you may create your own.<br/>
-                Check out some of our <Link to='/posts'>user's posts.</Link>
+                Check out some of our <Link to='/walls'>users' walls.</Link>
             </p>
         </div>
     )

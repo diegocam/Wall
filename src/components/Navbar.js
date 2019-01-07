@@ -13,7 +13,7 @@ const Navbar = () => {
                 <div className="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul className="navbar-nav mr-auto">
                         <li>
-                            <Link to="/posts" className="nav-link">Posts</Link>
+                            <Link to="/walls" className="nav-link">Walls</Link>
                         </li>
                     </ul>
                     <Link role="button" to="/login" className="btn btn-outline-success my-2 my-sm-0">Log In</Link>
