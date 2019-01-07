@@ -1,7 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom' 
 
-const Wall = () => {
+const Home = () => {
     return (
         <div className="text-center mt-5">
             <h2>Welcome to The Wall</h2>
@@ -14,4 +14,4 @@ const Wall = () => {
     )
 }
 
-export default Wall
+export default Home
