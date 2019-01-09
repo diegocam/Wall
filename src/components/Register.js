@@ -59,7 +59,7 @@ class Register extends React.Component {
         if (!this.validateEmail(email)) errors.email.push("Invalid email format.")
         if (password == '') errors.password.push("Password is required.")
         if (password_confirm == '') errors.password_confirm.push("Password confirmation is required.")
-        if (password.length < 8) errors.password.push("The password should be at least 8 characters long")
+        if (password.length < 4) errors.password.push("The password should be at least 8 characters long")
         if (password !== password_confirm) {
             errors.password.push("Passwords do not match")
             errors.password_confirm.push("Passwords do not match")
@@ -71,16 +71,25 @@ class Register extends React.Component {
 
         if (no_errors) {
 
-            console.log('Make the API request')
-            // axios.post(process.env.API_URL + '/register', data)
-            //     .then( token => { 
-            //         console.log(token)
-            //         //localStorage.put('wall-jwt', token)
-            //         // redirect to last page, if no hitory go to Walls
-
-            //     }).catch( error => {
-            //         console.log(error)
-            //     })
+            axios.post(process.env.API_URL + '/api/register', {
+                first_name: first_name,
+                last_name: last_name,
+                email: email,
+                password: password,
+                client_id: process.env.API_CLIENT_ID,
+                client_secret: process.env.API_CLIENT_SECRET,
+            }, {
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            }).then( response => { 
+                    console.log(response.data.message)
+                    localStorage.setItem('wall-jwt', response.data.token)
+                    // redirect to last page, if no hitory go to Walls
+                    // @TODO: Fix redirect
+                }).catch( error => {
+                    console.log(error)
+                })
         }
         
     }
