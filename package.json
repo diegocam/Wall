@@ -10,6 +10,7 @@
   "author": "Diego Camacho <camachojcd@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "axios": "^0.18.0",
     "bootstrap": "^4.2.1",
     "dotenv-webpack": "^1.6.0",
     "jquery": "^3.3.1",
