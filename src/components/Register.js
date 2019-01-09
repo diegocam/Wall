@@ -84,7 +84,10 @@ class Register extends React.Component {
                 }
             }).then( response => { 
                     console.log(response.data.message)
-                    localStorage.setItem('wall-jwt', response.data.token)
+                    let expirationDateTime = new Date();
+                    expirationDateTime.setTime(expirationDateTime.getTime() + response.data.token.expires_in);
+                    document.cookie = "wall_access_token="+response.data.token.access_token+"; expires=" + expirationDateTime.toUTCString() + "; path=/";
+                    document.cookie = "wall_refresh_token="+response.data.token.refresh_token+"; expires=" + expirationDateTime.toUTCString() + "; path=/";
                     // redirect to last page, if no hitory go to Walls
                     // @TODO: Fix redirect
                 }).catch( error => {
