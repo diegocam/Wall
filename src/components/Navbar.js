@@ -1,20 +1,24 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-const cookies = require('browser-cookies');
+const cookies = require('browser-cookies')
 
 class Navbar extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
             isLoggedIn: false,
+            user: null
         }
     }
 
     componentDidMount() {
         // check if already logged in (if token is stored)
-        if (document.cookie.indexOf('wall_access_token') > -1) {
+        const cookie = JSON.parse(cookies.get('wall_json'))
+
+        if (cookie) {
             this.setState({
                 isLoggedIn: true,
+                user: cookie.user
             })
         } else {
             this.setState({
@@ -25,8 +29,7 @@ class Navbar extends React.Component {
 
     logout(e) {
         e.preventDefault
-        cookies.erase('wall_access_token');
-        cookies.erase('wall_refresh_token');
+        cookies.erase('wall_json');
         window.location = '/login'
     }
 
@@ -35,9 +38,15 @@ class Navbar extends React.Component {
         if (this.state.isLoggedIn) {
             loginButtons = (
                 <React.Fragment>
+                    <Link
+                        to="/wall/1"
+                    >
+                        {this.state.user.first_name} {this.state.user.last_name}
+                    </Link>
+
                     <a
                         role="button"
-                        className="btn btn-outline-success my-2 my-sm-0"
+                        className="btn btn-outline-success my-2 my-sm-0 ml-2"
                         onClick={this.logout}
                     >
                         Log Out
