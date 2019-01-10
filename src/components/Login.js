@@ -19,7 +19,7 @@ class Login extends React.Component {
 
     componentWillMount() {
         // check if already logged in (if token is stored)
-        if (document.cookie.indexOf('wall_access_token') > -1) {
+        if (document.cookie.indexOf('wall_json') > -1) {
             // redirect to walls
             window.location = 'walls'
         }
@@ -78,13 +78,19 @@ class Login extends React.Component {
                 )
                 .then(response => {
                     console.log(response.data.message)
+
+                    const wall_json = {
+                        'access_token':response.data.token.access_token,
+                        'refresh_token':response.data.token.refresh_token,
+                        'user':response.data.user,
+                    }
+
                     let expirationDateTime = new Date()
                     expirationDateTime.setTime(
                         expirationDateTime.getTime() + response.data.token.expires_in
                     )
-                    document.cookie = 'wall_access_token=' + response.data.token.access_token + '; expires=' + expirationDateTime.toUTCString() + '; path=/'
-                    document.cookie = 'wall_refresh_token=' + response.data.token.refresh_token + '; expires=' + expirationDateTime.toUTCString() + '; path=/'
-                    
+                    document.cookie = 'wall_json=' + JSON.stringify(wall_json) + '; expires=' + expirationDateTime.toUTCString() + '; path=/'
+
                     window.location = 'walls'
                 })
                 .catch(error => {

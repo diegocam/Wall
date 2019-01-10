@@ -84,10 +84,14 @@ class Register extends React.Component {
                 }
             }).then( response => { 
                     console.log(response.data.message)
+                    const wall_json = {
+                        'access_token':response.data.token.access_token,
+                        'refresh_token':response.data.token.refresh_token,
+                        'user':response.data.user,
+                    }
                     let expirationDateTime = new Date();
                     expirationDateTime.setTime(expirationDateTime.getTime() + response.data.token.expires_in);
-                    document.cookie = "wall_access_token="+response.data.token.access_token+"; expires=" + expirationDateTime.toUTCString() + "; path=/";
-                    document.cookie = "wall_refresh_token="+response.data.token.refresh_token+"; expires=" + expirationDateTime.toUTCString() + "; path=/";
+                    document.cookie = "wall_json=" + JSON.stringify(wall_json) + "; expires=" + expirationDateTime.toUTCString() + "; path=/";
                     // redirect to last page, if no hitory go to Walls
                     // @TODO: Fix redirect
                 }).catch( error => {
