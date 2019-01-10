@@ -19,8 +19,7 @@ class Login extends React.Component {
 
     componentWillMount() {
         // check if already logged in (if token is stored)
-        const token = localStorage.getItem('wall_access_token')
-        if (token) {
+        if (document.cookie.indexOf('wall_access_token') > -1) {
             // redirect to walls
             window.location = 'walls'
         }
