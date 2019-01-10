@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+const cookies = require('browser-cookies');
 
 class Navbar extends React.Component {
     constructor(props) {
@@ -22,18 +23,25 @@ class Navbar extends React.Component {
         }
     }
 
+    logout(e) {
+        e.preventDefault
+        cookies.erase('wall_access_token');
+        cookies.erase('wall_refresh_token');
+        window.location = '/login'
+    }
+
     render() {
         let loginButtons
         if (this.state.isLoggedIn) {
             loginButtons = (
                 <React.Fragment>
-                    <Link
+                    <a
                         role="button"
-                        to="/logout"
                         className="btn btn-outline-success my-2 my-sm-0"
+                        onClick={this.logout}
                     >
                         Log Out
-                    </Link>
+                    </a>
                 </React.Fragment>
             )
         } else {
