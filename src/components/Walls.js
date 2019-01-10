@@ -12,7 +12,7 @@ class Walls extends React.Component {
 
     componentWillMount(){
         // check if not logged in 
-        if (document.cookie.indexOf('wall_access_token') == -1) {
+        if (document.cookie.indexOf('wall_json') == -1) {
             // redirect to login
             window.location = 'login'
         } else {
@@ -31,7 +31,7 @@ class Walls extends React.Component {
 
                 <div className="list-group">
                     <Link
-                        to="/wall"
+                        to="/wall/1"
                         className="list-group-item list-group-item-action flex-column align-items-start active"
                     >
                         <div className="d-flex w-100 justify-content-between">
