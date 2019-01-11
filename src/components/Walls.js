@@ -51,7 +51,6 @@ class Walls extends React.Component {
             !this.state.isLoggedIn ||
             (this.state.isLoggedIn && !this.state.user.wall)
         ) {
-            console.log(this.state.isLoggedIn)
             startWallQuestion = (
                 <div className="text-center">
                     <Link
