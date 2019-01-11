@@ -97,7 +97,7 @@ class Wall extends React.Component {
         } 
 
         let create_post_box = ''
-        if (this.state.logged_in_user) {
+        if (this.state.logged_in_user && wall_user.id == this.state.logged_in_user.id) {
             create_post_box = (
                 <div className="form-group new-post-box">
                     <textarea
@@ -114,12 +114,12 @@ class Wall extends React.Component {
         }
 
         let posts = ''
-        if (this.state.current_user.posts.length > 0) {
-            posts = this.state.current_user.posts.map( (post, k) => {
+        if (wall_user.posts.length > 0) {
+            posts = wall_user.posts.map( (post, k) => {
                 return <div key={k} className="post text-left">
                             <div className="header">
                                 <div className="title">
-                                    <a href="">{ this.state.current_user.full_name}</a>
+                                    <a href="">{ wall_user.full_name}</a>
                                 </div>
                                 <div className="subtitle">{ post.updated_when}</div>
                             </div>
