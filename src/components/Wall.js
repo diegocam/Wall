@@ -7,11 +7,10 @@ class Wall extends React.Component {
         super(props)
 
         this.state = {
-            loggedIn: false,
-            user: {},
-            wall_user: {},
-            postContent: '',
-            cookie: {},
+            logged_in_user: {},
+            current_user: {},
+            post_content: '',
+            access_token: '',
         }
 
         this.handleChange = this.handleChange.bind(this)
@@ -23,22 +22,33 @@ class Wall extends React.Component {
 
         if (cookie) {
             this.setState({
-                cookie: cookie,
-                isLoggedIn: true,
-                user: cookie.user,
+                access_token: cookie.access_token,
+                logged_in_user: cookie.user,
             })
         } else {
             this.setState({
-                isLoggedIn: false,
+                logged_in_user: false,
             })
         }
     }
 
     componentDidMount() {
-        const user_id = this.props.match.params.id
+
+        // this is the id of the user whose current wall we are seeing. It is the user Id on the URL.
+        const url_user_id = this.props.match.params.id
+
+        // if the URL_USER is the same as the LOGGED_IN user, then we are viewing our own wall
+
+        // if we are not viewing our own wall, then we are not allowed to see the POST BOX. However
+        // we are allowed to see COMMENT Boxes
+
         axios
-            .get(process.env.API_URL + '/api/user/' + user_id)
-            .then(response => console.log(response))
+            .get(process.env.API_URL + '/api/user/' + url_user_id)
+            .then(res => {
+                this.setState({
+                    current_user: res.data
+                })
+            })
             .catch(error => console.log(error))
     }
 
@@ -51,29 +61,29 @@ class Wall extends React.Component {
     }
 
     onCreate() {
-        if (this.state.postContent == '') {
+        if (this.state.post_content == '') {
             alert('Cannot be blank')
             return
         }
 
         // more validation here
-        
+
         axios
             .post(
                 process.env.API_URL + '/api/post',
                 {
-                    content: this.state.postContent,
+                    content: this.state.post_content,
                 },
                 {
                     headers: {
                         'Content-Type': 'application/json',
-                        'Authorization': 'Bearer ' + this.state.cookie.access_token,
+                        'Authorization': 'Bearer ' + this.state.access_token,
                     },
                 }
             )
             .then(res => {
                 this.setState({
-                    postContent: ''
+                    post_content: ''
                 })
                 this.fetchPosts()
             })
@@ -81,18 +91,26 @@ class Wall extends React.Component {
     }
 
     fetchPosts() {
-
+        // @TODO. This needs fixing
+        axios
+            .get(process.env.API_URL + '/api/posts')
+            .then(response => {
+                this.setState({
+                    walls: response.data,
+                })
+            })
+            .catch(error => console.log(error))
     }
 
     render() {
-        let postBox = ''
-        if (this.state.isLoggedIn) {
-            postBox = (
+        let post_box = ''
+        if (this.state.logged_in_user) {
+            post_box = (
                 <div className="form-group new-post-box">
                     <textarea
                         className="form-control"
-                        name="postContent"
-                        value={this.state.postContent}
+                        name="post_content"
+                        value={this.state.post_content}
                         onChange={this.handleChange}
                     />
                     <button className="btn btn-primary" onClick={this.onCreate}>
@@ -104,8 +122,8 @@ class Wall extends React.Component {
 
         return (
             <div id="wall-page" className="col-md-8 offset-md-2 text-center">
-                <h2>{this.state.user.full_name}'s Wall</h2>
-                {postBox}
+                <h2>{this.state.logged_in_user.full_name}'s Wall</h2>
+                {post_box}
                 <div className="px-4">
                     <div className="post text-left">
                         <div className="header">
