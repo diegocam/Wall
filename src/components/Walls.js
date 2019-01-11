@@ -52,16 +52,16 @@ class Walls extends React.Component {
             (this.state.isLoggedIn && !this.state.user.wall)
         ) {
             startWallQuestion = (
-                <div className="text-center">
+                <div className="text-center mb-3">
                     <Link
                         role="button"
                         to={ !this.state.isLoggedIn ? '/login' : '/wall/' + this.state.user.id}
                         className="btn btn-outline-success mb-2"
                         onClick={this.createWall}
                     >
-                        Start your own Wall
+                        See your own wall
                     </Link>
-                    <div className="small muted">... or view other users' walls below</div>
+                    <div className="small muted">... or scroll down to see everyone's wall.</div>
                 </div>
             )
         }
