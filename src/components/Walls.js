@@ -7,7 +7,7 @@ class Walls extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            loggedIn: false,
+            isLoggedIn: false,
             user: {},
             walls: [],
         }
@@ -38,7 +38,6 @@ class Walls extends React.Component {
         axios
             .get(process.env.API_URL + '/api/walls')
             .then(response => {
-                console.log(response.data)
                 this.setState({
                     walls: response.data,
                 })
@@ -47,18 +46,17 @@ class Walls extends React.Component {
     }
 
     render() {
-        console.log(this.state.user)
-
         let startWallQuestion = ''
         if (
-            !this.state.loggedIn ||
-            (this.state.loggedIn && !this.state.user.wall)
+            !this.state.isLoggedIn ||
+            (this.state.isLoggedIn && !this.state.user.wall)
         ) {
+            console.log(this.state.isLoggedIn)
             startWallQuestion = (
                 <div className="text-center">
                     <Link
                         role="button"
-                        to={'/wall/' + this.state.user.id}
+                        to={ !this.state.isLoggedIn ? '/login' : '/wall/' + this.state.user.id}
                         className="btn btn-outline-success mb-2"
                         onClick={this.createWall}
                     >
