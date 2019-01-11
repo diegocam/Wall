@@ -38,11 +38,9 @@ class Navbar extends React.Component {
         if (this.state.isLoggedIn) {
             loginButtons = (
                 <React.Fragment>
-                    <Link
-                        to="/wall/1"
-                    >
-                        {this.state.user.first_name} {this.state.user.last_name}
-                    </Link>
+                    <a href={"/wall/" + this.state.user.id}>
+                        {this.state.user.full_name}
+                    </a>
 
                     <a
                         role="button"
