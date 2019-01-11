@@ -10,22 +10,10 @@ class Walls extends React.Component {
         }
     }
 
-    componentWillMount(){
-        // check if not logged in 
-        if (document.cookie.indexOf('wall_json') == -1) {
-            // redirect to login
-            window.location = 'login'
-        } else {
-            this.setState({
-                loggedIn: true
-            })
-        }
-    }
-
     render() {
         
         return (
-            <div className={this.state.loggedIn ? "" : "d-none"}>
+            <div>
                 <h2>Walls</h2>
                 <p>A list of users' walls.</p>
 
