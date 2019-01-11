@@ -61,6 +61,7 @@ class Walls extends React.Component {
                     >
                         Start your own Wall
                     </Link>
+                    <div className="small muted">... or view other users' walls below</div>
                 </div>
             )
         }
