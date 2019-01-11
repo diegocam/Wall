@@ -17,7 +17,7 @@ const App = () => {
                     <Route path="/login" component={Login} />
                     <Route path="/register" component={Register} />
                     <Route path="/walls" component={Walls} />
-                    <Route path="/wall/:id?" component={Wall} />
+                    <Route path="/wall/:id" exact component={Wall} />
                     <Route render={
                         () => <h3>Not Found</h3>
                     }/>
