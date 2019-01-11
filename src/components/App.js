@@ -1,5 +1,5 @@
 import React from 'react'
-import { BrowserRouter, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import Home from './Home'
 import Login from './Login'
 import Register from './Register'
@@ -12,11 +12,16 @@ const App = () => {
         <BrowserRouter>
             <div className="container">
                 <Navbar />
-                <Route path="/" exact component={Home} />
-                <Route path="/login" exact component={Login} />
-                <Route path="/register" exact component={Register} />
-                <Route path="/walls" exact component={Walls} />
-                <Route path="/wall/:id" exact component={Wall} />
+                <Switch>
+                    <Route path="/" exact component={Home} />
+                    <Route path="/login" component={Login} />
+                    <Route path="/register" component={Register} />
+                    <Route path="/walls" component={Walls} />
+                    <Route path="/wall/:id?" component={Wall} />
+                    <Route render={
+                        () => <h3>Not Found</h3>
+                    }/>
+                </Switch>
             </div>
         </BrowserRouter>
     )
