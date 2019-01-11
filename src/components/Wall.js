@@ -6,9 +6,13 @@ class Wall extends React.Component {
     constructor(props) {
         super(props)
 
+        this.current_user_id = this.props.match.params.id
+
         this.state = {
             logged_in_user: {},
-            current_user: {},
+            current_user: {
+                posts: []
+            },
             post_content: '',
             access_token: '',
         }
@@ -33,17 +37,12 @@ class Wall extends React.Component {
     }
 
     componentDidMount() {
+        this.fetchCurrentUser()
+    }
 
-        // this is the id of the user whose current wall we are seeing. It is the user Id on the URL.
-        const url_user_id = this.props.match.params.id
-
-        // if the URL_USER is the same as the LOGGED_IN user, then we are viewing our own wall
-
-        // if we are not viewing our own wall, then we are not allowed to see the POST BOX. However
-        // we are allowed to see COMMENT Boxes
-
+    fetchCurrentUser() {
         axios
-            .get(process.env.API_URL + '/api/user/' + url_user_id)
+            .get(process.env.API_URL + '/api/user/' + this.current_user_id)
             .then(res => {
                 this.setState({
                     current_user: res.data
@@ -90,22 +89,16 @@ class Wall extends React.Component {
             .catch(e => console.log(e))
     }
 
-    fetchPosts() {
-        // @TODO. This needs fixing
-        axios
-            .get(process.env.API_URL + '/api/posts')
-            .then(response => {
-                this.setState({
-                    walls: response.data,
-                })
-            })
-            .catch(error => console.log(error))
-    }
-
     render() {
-        let post_box = ''
+
+        let wall_user = this.state.logged_in_user
+        if (this.state.logged_in_user.id !== this.current_user_id) {
+            wall_user = this.state.current_user
+        } 
+
+        let create_post_box = ''
         if (this.state.logged_in_user) {
-            post_box = (
+            create_post_box = (
                 <div className="form-group new-post-box">
                     <textarea
                         className="form-control"
@@ -120,103 +113,60 @@ class Wall extends React.Component {
             )
         }
 
+        let posts = ''
+        if (this.state.current_user.posts.length > 0) {
+            posts = this.state.current_user.posts.map( (post, k) => {
+                return <div key={k} className="post text-left">
+                            <div className="header">
+                                <div className="title">
+                                    <a href="">{ this.state.current_user.full_name}</a>
+                                </div>
+                                <div className="subtitle">{ post.updated_when}</div>
+                            </div>
+                            <div className="content">
+                                {post.content}
+                            </div>
+                            <div className="comments-section px-3 mt-2">
+                                
+                                <div className="comments py-2">
+                                    <div className="comment">
+                                        <span>
+                                            <a href="">Jane Doe</a>
+                                        </span>{' '}
+                                        That's so cool. Welcome.
+                                    </div>
+                                </div>
+                                <div className="input-group input-group-sm mb-2">
+                                    <input
+                                        type="text"
+                                        className="form-control"
+                                        placeholder="Write a comment"
+                                        aria-label="Write a comment"
+                                        aria-describedby="button-addon2"
+                                    />
+                                    <div className="input-group-append">
+                                        <button
+                                            className="btn btn-outline-secondary"
+                                            type="button"
+                                            id="button-addon2"
+                                        >
+                                            Submit
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+            })
+        }
+
         return (
             <div id="wall-page" className="col-md-8 offset-md-2 text-center">
-                <h2>{this.state.logged_in_user.full_name}'s Wall</h2>
-                {post_box}
+                <h2>{wall_user.full_name}'s Wall</h2>
+                {create_post_box}
                 <div className="px-4">
-                    <div className="post text-left">
-                        <div className="header">
-                            <div className="title">
-                                <a href="">Diego Camacho</a>
-                            </div>
-                            <div className="subtitle">May 12, 2018 12:31pm</div>
-                        </div>
-                        <div className="content">
-                            This is my first post. Im so excited! kjh khj kj kj
-                            hkfjdshkjfhsd kfjhksdjfhskjdfh ksdjfhk sdjfh ksdhfks
-                            dfhksjdhf ks
-                        </div>
-                        <div className="comments-section px-3 mt-2">
-                            <div className="comments py-2">
-                                <div className="comment">
-                                    <span>
-                                        <a href="">Jane Doe</a>
-                                    </span>{' '}
-                                    That's so cool. Welcome.
-                                </div>
-                            </div>
-                            <div className="input-group input-group-sm mb-2">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Write a comment"
-                                    aria-label="Write a comment"
-                                    aria-describedby="button-addon2"
-                                />
-                                <div className="input-group-append">
-                                    <button
-                                        className="btn btn-outline-secondary"
-                                        type="button"
-                                        id="button-addon2"
-                                    >
-                                        Submit
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div className="post text-left">
-                        <div className="header">
-                            <div className="title">
-                                <a href="">Diego Camacho</a>
-                            </div>
-                            <div className="subtitle">May 12, 2018 12:31pm</div>
-                        </div>
-                        <div className="content">
-                            This is my first post. Im so excited! kjh khj kj kj
-                            hkfjdshkjfhsd kfjhksdjfhskjdfh ksdjfhk sdjfh ksdhfks
-                            dfhksjdhf ks
-                        </div>
-                        <div className="comments-section px-3 mt-2">
-                            <div className="comments py-2">
-                                <div className="comment">
-                                    <span>
-                                        <a href="">Jane Doe</a>
-                                    </span>{' '}
-                                    That's so cool. Welcome.
-                                </div>
-                                <div className="comment">
-                                    <span>
-                                        <a href="">Jane Doe</a>
-                                    </span>{' '}
-                                    I agree. Welcome. My first time here was
-                                    amazing. This app has been the best so far.
-                                    Even better than the competetion. You know
-                                    who im talking about.
-                                </div>
-                            </div>
-                            <div className="input-group input-group-sm mb-2">
-                                <input
-                                    type="text"
-                                    className="form-control"
-                                    placeholder="Write a comment"
-                                    aria-label="Write a comment"
-                                    aria-describedby="button-addon2"
-                                />
-                                <div className="input-group-append">
-                                    <button
-                                        className="btn btn-outline-secondary"
-                                        type="button"
-                                        id="button-addon2"
-                                    >
-                                        Submit
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    {posts}
                 </div>
             </div>
         )
