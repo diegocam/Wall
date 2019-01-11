@@ -1,12 +1,15 @@
 import React from 'react'
+import axios from 'axios'
 const cookies = require('browser-cookies')
 
 class Wall extends React.Component {
     constructor(props) {
         super(props)
+
         this.state = {
             loggedIn: false,
             user: {},
+            wall_user: {},
         }
     }
 
@@ -23,6 +26,15 @@ class Wall extends React.Component {
                 isLoggedIn: false,
             })
         }
+    }
+
+    componentDidMount() {
+        console.log(this.props.match)
+        const user_id = this.props.match.params.id
+        axios
+            .get(process.env.API_URL + '/api/user/' + user_id)
+            .then(response => console.log(response))
+            .catch(error => console.log(error))
     }
 
     render() {
