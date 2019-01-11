@@ -10,7 +10,12 @@ class Wall extends React.Component {
             loggedIn: false,
             user: {},
             wall_user: {},
+            postContent: '',
+            cookie: {},
         }
+
+        this.handleChange = this.handleChange.bind(this)
+        this.onCreate = this.onCreate.bind(this)
     }
 
     componentWillMount() {
@@ -18,6 +23,7 @@ class Wall extends React.Component {
 
         if (cookie) {
             this.setState({
+                cookie: cookie,
                 isLoggedIn: true,
                 user: cookie.user,
             })
@@ -29,7 +35,6 @@ class Wall extends React.Component {
     }
 
     componentDidMount() {
-        console.log(this.props.match)
         const user_id = this.props.match.params.id
         axios
             .get(process.env.API_URL + '/api/user/' + user_id)
@@ -37,20 +42,69 @@ class Wall extends React.Component {
             .catch(error => console.log(error))
     }
 
+    handleChange(e) {
+        e.preventDefault()
+        const { name, value } = e.target
+        this.setState({
+            [name]: value,
+        })
+    }
+
+    onCreate() {
+        if (this.state.postContent == '') {
+            alert('Cannot be blank')
+            return
+        }
+
+        // more validation here
+        
+        axios
+            .post(
+                process.env.API_URL + '/api/post',
+                {
+                    content: this.state.postContent,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + this.state.cookie.access_token,
+                    },
+                }
+            )
+            .then(res => {
+                this.setState({
+                    postContent: ''
+                })
+                this.fetchPosts()
+            })
+            .catch(e => console.log(e))
+    }
+
+    fetchPosts() {
+
+    }
+
     render() {
         let postBox = ''
         if (this.state.isLoggedIn) {
             postBox = (
                 <div className="form-group new-post-box">
-                    <textarea className="form-control" />
-                    <button className="btn btn-primary">Create Post</button>
+                    <textarea
+                        className="form-control"
+                        name="postContent"
+                        value={this.state.postContent}
+                        onChange={this.handleChange}
+                    />
+                    <button className="btn btn-primary" onClick={this.onCreate}>
+                        Create Post
+                    </button>
                 </div>
             )
         }
 
         return (
             <div id="wall-page" className="col-md-8 offset-md-2 text-center">
-                <h2>Diego Camacho's Wall</h2>
+                <h2>{this.state.user.full_name}'s Wall</h2>
                 {postBox}
                 <div className="px-4">
                     <div className="post text-left">
