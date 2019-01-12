@@ -1,5 +1,6 @@
 import React from 'react'
 import axios from 'axios'
+import Comments from './Comments';
 const cookies = require('browser-cookies')
 
 class Wall extends React.Component {
@@ -19,6 +20,7 @@ class Wall extends React.Component {
 
         this.handleChange = this.handleChange.bind(this)
         this.onCreate = this.onCreate.bind(this)
+        this.fetchCurrentUser = this.fetchCurrentUser.bind(this)
     }
 
     componentWillMount() {
@@ -84,7 +86,6 @@ class Wall extends React.Component {
                 this.setState({
                     post_content: ''
                 })
-                this.fetchPosts()
             })
             .catch(e => console.log(e))
     }
@@ -126,36 +127,7 @@ class Wall extends React.Component {
                             <div className="content">
                                 {post.content}
                             </div>
-                            <div className="comments-section px-3 mt-2">
-                                
-                                <div className="comments py-2">
-                                    <div className="comment">
-                                        <span>
-                                            <a href="">Jane Doe</a>
-                                        </span>{' '}
-                                        That's so cool. Welcome.
-                                    </div>
-                                </div>
-                                <div className="input-group input-group-sm mb-2">
-                                    <input
-                                        type="text"
-                                        className="form-control"
-                                        placeholder="Write a comment"
-                                        aria-label="Write a comment"
-                                        aria-describedby="button-addon2"
-                                    />
-                                    <div className="input-group-append">
-                                        <button
-                                            className="btn btn-outline-secondary"
-                                            type="button"
-                                            id="button-addon2"
-                                        >
-                                            Submit
-                                        </button>
-                                    </div>
-                                </div>
-
-                            </div>
+                            <Comments post={post} access_token={this.state.access_token} fetchCurrentUser={this.fetchCurrentUser}/>
                         </div>
 
             })
