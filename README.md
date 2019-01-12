@@ -6,12 +6,12 @@ This application is a fun/simple version of a social media "wall", where a user 
 
 This is purely the front-end of the application built usint React. It connects to an API by providing it environment configs.
 
-##### Prereqs:
+### Prereqs:
 
 * [Git Client](https://git-scm.com/downloads)
 * [Yarn](https://yarnpkg.com/en/)
 
-##### Installation:
+### Installation:
 
 1. Clone this repo to your local environment using Git
     ```
@@ -30,5 +30,5 @@ This is purely the front-end of the application built usint React. It connects t
     yarn run start
     ```
 
-###### Note:
+#### Note:
 Keep in mind that the application will not be fully functional until a established connection with the API is made. The API is located here: https://github.com/diegocam/WallAPI
