@@ -1,5 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import axios from 'axios'
 const cookies = require('browser-cookies')
 
 class Navbar extends React.Component {
@@ -7,8 +8,10 @@ class Navbar extends React.Component {
         super(props)
         this.state = {
             isLoggedIn: false,
-            user: null
+            user: null,
+            access_token: '',
         }
+        this.logout = this.logout.bind(this)
     }
 
     componentDidMount() {
@@ -18,7 +21,8 @@ class Navbar extends React.Component {
         if (cookie) {
             this.setState({
                 isLoggedIn: true,
-                user: cookie.user
+                user: cookie.user,
+                access_token: cookie.access_token,
             })
         } else {
             this.setState({
@@ -28,9 +32,28 @@ class Navbar extends React.Component {
     }
 
     logout(e) {
-        e.preventDefault
-        cookies.erase('wall_json');
-        window.location = '/login'
+        e.preventDefault()
+
+        axios
+            .post(
+                process.env.API_URL + '/api/logout',
+                {},
+                {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: 'Bearer ' + this.state.access_token,
+                    },
+                }
+            )
+            .then(response => {
+                console.log(response)
+                cookies.erase('wall_json')
+                window.location = '/login'
+            })
+            .catch(error => {
+                console.log(error)
+                alert('Logout failed. Please try again.')
+            })
     }
 
     render() {
@@ -38,7 +61,7 @@ class Navbar extends React.Component {
         if (this.state.isLoggedIn) {
             loginButtons = (
                 <React.Fragment>
-                    <a href={"/wall/" + this.state.user.id}>
+                    <a href={'/wall/' + this.state.user.id}>
                         {this.state.user.full_name}
                     </a>
 
