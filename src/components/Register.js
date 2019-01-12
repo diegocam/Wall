@@ -92,8 +92,7 @@ class Register extends React.Component {
                     let expirationDateTime = new Date();
                     expirationDateTime.setTime(expirationDateTime.getTime() + response.data.token.expires_in);
                     document.cookie = "wall_json=" + JSON.stringify(wall_json) + "; expires=" + expirationDateTime.toUTCString() + "; path=/";
-                    // redirect to last page, if no hitory go to Walls
-                    // @TODO: Fix redirect
+                    window.location = 'walls'
                 }).catch( error => {
                     console.log(error)
                 })
