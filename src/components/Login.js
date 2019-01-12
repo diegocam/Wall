@@ -67,8 +67,6 @@ class Login extends React.Component {
                     {
                         email: email,
                         password: password,
-                        client_id: process.env.API_CLIENT_ID,
-                        client_secret: process.env.API_CLIENT_SECRET,
                     },
                     {
                         headers: {

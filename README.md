@@ -23,7 +23,7 @@ This is purely the front-end of the application built using React. It connects t
     ```
     yarn -i
     ```
-2. Make a copy of `.env.example` and name it `.env`. This file will contain information to connect to the API.
+2. Make a copy of `.env.example` and name it `.env`. This file will contain sensitive information.
 
 3. Run your application
     ```

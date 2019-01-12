@@ -76,8 +76,6 @@ class Register extends React.Component {
                 last_name: last_name,
                 email: email,
                 password: password,
-                client_id: process.env.API_CLIENT_ID,
-                client_secret: process.env.API_CLIENT_SECRET,
             }, {
                 headers: {
                     'Content-Type': 'application/json',
