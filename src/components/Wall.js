@@ -128,7 +128,10 @@ class Wall extends React.Component {
                             <div className="content">
                                 {post.content}
                             </div>
-                            <Comments post={post} access_token={this.state.access_token} fetchCurrentUser={this.fetchCurrentUser}/>
+                            {Object.keys(this.state.logged_in_user).length > 0
+                                ? <Comments post={post} access_token={this.state.access_token} fetchCurrentUser={this.fetchCurrentUser} />
+                                : ""
+                            }
                         </div>
 
             })
