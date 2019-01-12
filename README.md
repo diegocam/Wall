@@ -4,7 +4,7 @@
 
 This application is a fun/simple version of a social media "wall", where a user can create posts and have other users provide comments per post. 
 
-This is purely the front-end of the application built usint React. It connects to an API by providing it environment configs.
+This is purely the front-end of the application built using React. It connects to an API by providing it environment configs.
 
 ### Prereqs:
 
