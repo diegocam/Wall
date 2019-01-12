@@ -86,6 +86,7 @@ class Wall extends React.Component {
                 this.setState({
                     post_content: ''
                 })
+                this.fetchCurrentUser()
             })
             .catch(e => console.log(e))
     }
